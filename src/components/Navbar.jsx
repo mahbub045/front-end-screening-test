@@ -65,22 +65,22 @@ const Navbar = () => {
                     <div className="hidden w-full md:block md:w-auto" id="navbar-default">
                         <ul className="font-medium flex flex-col p-[10px] gap-[80px] md:p-0 mt-4  rounded-lg md:flex-row md:space-x-8 md:mt-0">
                             <li>
-                                <a href="#" className="py-2 text-white md:p-0" aria-current="page">
+                                <a href="#" className="py-2 text-white hover:text-[#2D3FE4] md:p-0" aria-current="page">
                                     Home
                                 </a>
                             </li>
                             <li>
-                                <a href="#" className="py-2 text-white md:p-0" aria-current="page">
+                                <a href="#" className="py-2 text-white hover:text-[#2D3FE4] md:p-0" aria-current="page">
                                     About
                                 </a>
                             </li>
                             <li>
-                                <a href="#" className="py-2 text-white md:p-0" aria-current="page">
+                                <a href="#" className="py-2 text-white hover:text-[#2D3FE4] md:p-0" aria-current="page">
                                     Blog
                                 </a>
                             </li>
                             <li>
-                                <a href="#" className="py-2 text-white md:p-0" aria-current="page">
+                                <a href="#" className="py-2 text-white hover:text-[#2D3FE4] md:p-0" aria-current="page">
                                     Contact
                                 </a>
                             </li>
