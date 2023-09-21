@@ -1,28 +1,33 @@
 import React, { useState } from 'react';
-import MenuModal from './MenuModal';
-import SidebarModal from './SidebarModal';
+import Drawer from './Drawer';
+import MenuDrawer from './MenuDrawer';
 
 const Navbar = () => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const [isDrawerOpenMenu, setIsDrawerOpenMenu] = useState(false);
 
-    const openMenu = () => {
-        setIsMenuOpen(true);
-        setIsSidebarOpen(false); // Close the sidebar modal if it's open
+    const handleToggleDrawerMenu = () => {
+        setIsDrawerOpenMenu(!isDrawerOpenMenu);
     };
 
-    const openSidebar = () => {
-        setIsSidebarOpen(true);
-        setIsMenuOpen(false); // Close the menu modal if it's open
+    const handleToggleDrawer = () => {
+        setIsDrawerOpen(!isDrawerOpen);
     };
 
-    const closeMenu = () => {
-        setIsMenuOpen(false);
-    };
+    const [menu1Visible, setMenu1Visible] = useState(false);
+    const [menu2Visible, setMenu2Visible] = useState(false);
+    const [menu3Visible, setMenu3Visible] = useState(false);
 
-    const closeSidebar = () => {
-        setIsSidebarOpen(false);
-    };
+    const toggleMenu1 = () => {
+        setMenu1Visible(!menu1Visible);
+    }
+    const toggleMenu2 = () => {
+        setMenu2Visible(!menu2Visible);
+    }
+    const toggleMenu3 = () => {
+        setMenu3Visible(!menu3Visible);
+    }
+
 
     return (
         <>
@@ -30,7 +35,7 @@ const Navbar = () => {
                 <div className="max-w-screen-xl md:flex md:flex-wrap md:items-center md:justify-center md:mx-auto px-2 pt-[10px] pb-[11px]">
                     <div className="flex justify-between ">
                         <button
-                            onClick={openMenu}
+                            onClick={handleToggleDrawerMenu}
                             type="button"
                             className="pl-3 text-lg text-white rounded-lg md:hidden focus:outline-none flex"
                         >
@@ -43,7 +48,7 @@ const Navbar = () => {
                         </button>
 
                         <button
-                            onClick={openSidebar}
+                            onClick={handleToggleDrawer}
                             type="button"
                             className="text-lg text-white rounded-lg md:hidden focus:outline-none flex"
                         >
@@ -83,8 +88,129 @@ const Navbar = () => {
                     </div>
                 </div>
             </nav>
-            <MenuModal isOpen={isMenuOpen} onClose={closeMenu} />
-            <SidebarModal isOpen={isSidebarOpen} onClose={closeSidebar} />
+            {isDrawerOpenMenu && (
+                <>
+                    <div className="fixed top-0 h-screen w-screen flex flex-row justify-start z-[2001]">
+                        <div onClick={handleToggleDrawerMenu} className="flex-1 "></div>
+                        <MenuDrawer isOpenMenu={isDrawerOpenMenu} onCloseMenu={handleToggleDrawerMenu}>
+                            <div>
+                                <ul className="font-medium flex flex-col items-center justify-center px-10 py-1 mt-4 ">
+                                    <li className='py-5'>
+                                        <a href="#" className="py-2 text-black hover:text-[#2D3FE4]" aria-current="page">
+                                            Home
+                                        </a>
+                                    </li>
+                                    <li className='py-5'>
+                                        <a href="#" className="py-2 text-black hover:text-[#2D3FE4]" aria-current="page">
+                                            About
+                                        </a>
+                                    </li>
+                                    <li className='py-5'>
+                                        <a href="#" className="py-2 text-black hover:text-[#2D3FE4]" aria-current="page">
+                                            Blog
+                                        </a>
+                                    </li>
+                                    <li className='py-5'>
+                                        <a href="#" className="py-2 text-black hover:text-[#2D3FE4]" aria-current="page">
+                                            Contact
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </MenuDrawer>
+                    </div>
+                </>
+            )}
+            {/* sidebar modal */}
+            {isDrawerOpen && (
+                <>
+                    <div className="fixed top-0 h-screen w-screen flex flex-row justify-start z-[2001]">
+                        <div onClick={handleToggleDrawer} className="flex-1 "></div>
+
+                        <Drawer isOpen={isDrawerOpen} onClose={handleToggleDrawer}>
+                            <div className='pt-1'>
+                                <h2 className='text-black font-medium ml-[20px]'>Sidebar</h2>
+                                {/* item1 */}
+                                <div className="relative flex flex-col items-end gap-2 mt-4 ml-5 mr-2">
+                                    <button onClick={toggleMenu1} className="relative block w-full h-[25px] bg-white text-gray-700 pr-5 px-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                        <span className='absolute inset-y-0 left-0 flex items-center px-2 font-medium text-black'>Item 1</span>
+                                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="8" viewBox="0 0 14 8" fill="none">
+                                                <path d="M1 0.5L7 6.5L13 0.5" stroke="black" strokeLinecap="round" />
+                                            </svg>
+                                        </div>
+                                    </button>
+                                    {menu1Visible && (
+                                        <ul className="block relative">
+                                            <li>
+                                                <button className="px-8 bg-[#B8B6B6] w-full h-[25px] text-black font-medium">
+                                                    Item A
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button className="mt-2 px-8 bg-[#B8B6B6] w-full h-[25px] text-black font-medium">
+                                                    Item B
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    )}
+                                </div>
+                                {/* item2 */}
+                                <div className="relative flex flex-col items-end gap-2 mt-4 ml-5 mr-2">
+                                    <button onClick={toggleMenu2} className="relative block w-full h-[25px] bg-white text-gray-700 pr-5 px-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                        <span className='absolute inset-y-0 left-0 flex items-center px-2 font-medium text-black'>Item 2</span>
+                                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="8" viewBox="0 0 14 8" fill="none">
+                                                <path d="M1 0.5L7 6.5L13 0.5" stroke="black" strokeLinecap="round" />
+                                            </svg>
+                                        </div>
+                                    </button>
+                                    {menu2Visible && (
+                                        <ul className="block relative items-end">
+                                            <li>
+                                                <button className="px-8 bg-[#B8B6B6] w-full h-[25px] text-black font-medium">
+                                                    Item A
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button className="mt-2 px-8 bg-[#B8B6B6] w-full h-[25px] text-black font-medium">
+                                                    Item B
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    )}
+                                </div>
+                                {/* item3 */}
+                                <div className="relative flex flex-col items-end gap-2 mt-4 ml-5 mr-2">
+                                    <button onClick={toggleMenu3} className="relative block w-full h-[25px] bg-white text-gray-700 pr-5 px-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                        <span className='absolute inset-y-0 left-0 flex items-center px-2 font-medium text-black'>Item 3</span>
+                                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="8" viewBox="0 0 14 8" fill="none">
+                                                <path d="M1 0.5L7 6.5L13 0.5" stroke="black" strokeLinecap="round" />
+                                            </svg>
+                                        </div>
+                                    </button>
+                                    {menu3Visible && (
+                                        <ul className="block relative">
+                                            <li className=''>
+                                                <button className="px-8 bg-[#B8B6B6] w-full h-[25px] text-black font-medium">
+                                                    Item A
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button className="mt-2 px-8 bg-[#B8B6B6] w-full h-[25px] text-black font-medium">
+                                                    Item B
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    )}
+                                </div>
+                                {/* items end */}
+                            </div>
+                        </Drawer>
+                    </div>
+                </>
+            )}
         </>
     );
 };
